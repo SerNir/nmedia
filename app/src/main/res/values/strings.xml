@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">nmedia</string>
     <string name="nmedia">NMedia!</string>
+    <string name="post_author_avatar" translatable="false">Post author avatar </string>
+    <string name="image_button" translatable="false">Image button</string>
+    <string name="like_image" translatable="false">Like</string>
+    <string name="share_image" translatable="false">Share</string>
+    <string name="views_image" translatable="false">Views</string>
 </resources>

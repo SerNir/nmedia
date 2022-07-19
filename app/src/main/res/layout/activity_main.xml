@@ -14,10 +14,10 @@
         android:layout_height="@dimen/post_avatar_size"
         android:layout_marginStart="@dimen/common_spacing"
         android:layout_marginTop="@dimen/common_spacing"
+        android:contentDescription="@string/post_author_avatar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@sample/posts.json/data/authorAvatar"
-        android:contentDescription="@string/post_author_avatar" />
+        tools:srcCompat="@sample/posts.json/data/authorAvatar" />
 
     <TextView
         android:id="@+id/authorTextView"
@@ -48,10 +48,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/common_spacing"
         android:layout_marginEnd="@dimen/common_spacing"
+        android:contentDescription="@string/image_button"
+        android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_more_vert_24"
-        android:contentDescription="@string/image_button"/>
+        app:srcCompat="@drawable/ic_baseline_more_vert_24" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrierHead"
@@ -61,7 +62,7 @@
         app:constraint_referenced_ids="authorTextView, publishedTextView, logoImageView" />
 
     <TextView
-        android:id="@+id/content"
+        android:id="@+id/contentTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/common_spacing"
@@ -76,7 +77,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="content" />
+        app:constraint_referenced_ids="contentTextView" />
 
     <ImageView
         android:id="@+id/likeImageView"
@@ -84,10 +85,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/common_spacing"
         android:layout_marginStart="@dimen/common_spacing"
+        android:contentDescription="@string/like_image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/barrierContent"
-        app:srcCompat="@drawable/ic_outline_thumb_up_24"
-        android:contentDescription="@string/like_image" />
+        app:srcCompat="@drawable/ic_like_24" />
 
     <TextView
         android:id="@+id/likeTextView"
@@ -105,10 +106,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/common_spacing"
         android:layout_marginStart="@dimen/common_spacing"
+        android:contentDescription="@string/share_image"
         app:layout_constraintStart_toEndOf="@id/likeTextView"
         app:layout_constraintTop_toTopOf="@id/barrierContent"
-        app:srcCompat="@drawable/ic_baseline_share_24"
-        android:contentDescription="@string/share_image" />
+        app:srcCompat="@drawable/ic_baseline_share_24" />
 
     <TextView
         android:id="@+id/shareTextView"
@@ -136,9 +137,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/common_spacing"
         android:layout_marginEnd="@dimen/lower_spacing"
+        android:contentDescription="@string/views_image"
         app:layout_constraintEnd_toStartOf="@id/viewsTextView"
         app:layout_constraintTop_toTopOf="@id/barrierContent"
-        app:srcCompat="@drawable/ic_baseline_remove_red_eye_24"
-        android:contentDescription="@string/views_image" />
+        app:srcCompat="@drawable/ic_baseline_remove_red_eye_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

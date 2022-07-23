@@ -22,20 +22,20 @@ class MainActivity : AppCompatActivity() {
                 likeTextView.text = post.reducingNumber(post.likes)
                 shareTextView.text = post.reducingNumber(post.shares)
                 viewsTextView.text = post.reducingNumber(post.views)
+                likeImageView.setImageResource(
+                    if (post.likedByMe) R.drawable.ic_liked_24 else R.drawable.ic_like_24
+                )
+                likeTextView.text = post.reducingNumber(post.likes)
+                shareTextView.text = post.reducingNumber(post.shares)
 
-                binding.likeImageView.setOnClickListener {
-                    likeImageView.setImageResource(
-                        if (!post.likedByMe) R.drawable.ic_liked_24 else R.drawable.ic_like_24
-                    )
-                    likeTextView.text = post.reducingNumber(post.likes)
-                    viewModel.like()
-                }
-
-                binding.shareImageView.setOnClickListener {
-                    shareTextView.text = post.reducingNumber(post.shares)
-                    viewModel.share()
-                }
             }
+        }
+        binding.likeImageView.setOnClickListener {
+            viewModel.like()
+        }
+
+        binding.shareImageView.setOnClickListener {
+            viewModel.share()
         }
     }
 }

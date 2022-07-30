@@ -1,145 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/common_spacing"
     tools:context=".MainActivity">
-
-
-    <ImageView
-        android:id="@+id/logoImageView"
-        android:layout_width="@dimen/post_avatar_size"
-        android:layout_height="@dimen/post_avatar_size"
-        android:layout_marginStart="@dimen/common_spacing"
-        android:layout_marginTop="@dimen/common_spacing"
-        android:contentDescription="@string/post_author_avatar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@sample/posts.json/data/authorAvatar" />
-
-    <TextView
-        android:id="@+id/authorTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/common_spacing"
-        android:ellipsize="end"
-        android:singleLine="true"
-        app:layout_constraintBottom_toTopOf="@+id/publishedTextView"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton"
-        app:layout_constraintStart_toEndOf="@+id/logoImageView"
-        app:layout_constraintTop_toTopOf="@+id/logoImageView"
-        tools:text="@sample/posts.json/data/author" />
-
-    <TextView
-        android:id="@+id/publishedTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/common_spacing"
-        app:layout_constraintBottom_toBottomOf="@+id/logoImageView"
-        app:layout_constraintStart_toEndOf="@id/logoImageView"
-        app:layout_constraintTop_toBottomOf="@+id/authorTextView"
-        tools:text="@sample/posts.json/data/published" />
-
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common_spacing"
-        android:layout_marginEnd="@dimen/common_spacing"
-        android:contentDescription="@string/image_button"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_more_vert_24" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrierHead"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/listRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="authorTextView, publishedTextView, logoImageView" />
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/card_post"/>
 
-    <TextView
-        android:id="@+id/contentTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/common_spacing"
-        android:autoLink="web"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/barrierHead"
-        tools:text="@sample/posts.json/data/content" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrierContent"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="contentTextView" />
-
-    <ImageView
-        android:id="@+id/likeImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/common_spacing"
-        android:layout_marginStart="@dimen/common_spacing"
-        android:contentDescription="@string/like_image"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/barrierContent"
-        app:srcCompat="@drawable/ic_like_24" />
-
-    <TextView
-        android:id="@+id/likeTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/lower_spacing"
-        android:layout_marginTop="@dimen/common_spacing"
-        app:layout_constraintStart_toEndOf="@id/likeImageView"
-        app:layout_constraintTop_toTopOf="@id/barrierContent"
-        tools:text="10" />
-
-    <ImageView
-        android:id="@+id/shareImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/common_spacing"
-        android:layout_marginStart="@dimen/common_spacing"
-        android:contentDescription="@string/share_image"
-        app:layout_constraintStart_toEndOf="@id/likeTextView"
-        app:layout_constraintTop_toTopOf="@id/barrierContent"
-        app:srcCompat="@drawable/ic_baseline_share_24" />
-
-    <TextView
-        android:id="@+id/shareTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/lower_spacing"
-        android:layout_marginTop="@dimen/common_spacing"
-        app:layout_constraintStart_toEndOf="@id/shareImageView"
-        app:layout_constraintTop_toTopOf="@id/barrierContent"
-        tools:text="2" />
-
-    <TextView
-        android:id="@+id/viewsTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common_spacing"
-        android:layout_marginEnd="@dimen/common_spacing"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/barrierContent"
-        tools:text="50" />
-
-    <ImageView
-        android:id="@+id/viewsImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common_spacing"
-        android:layout_marginEnd="@dimen/lower_spacing"
-        android:contentDescription="@string/views_image"
-        app:layout_constraintEnd_toStartOf="@id/viewsTextView"
-        app:layout_constraintTop_toTopOf="@id/barrierContent"
-        app:srcCompat="@drawable/ic_baseline_remove_red_eye_24" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

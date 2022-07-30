@@ -1,35 +1,70 @@
 package ru.netology.nmedia.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ru.netology.nmedia.dto.Post
 
 class PostRepositoryInMemoryImpl : PostRepository {
-    private var post = Post(
-        id = 1,
-        author = "Нетология. Университет интернет-профессий будующего",
-        content = "Привет это новая Нетология! Когда-то Нетология начиналась с интенсивов по онлайн маркетингу. Затем появились курсы по дизайну, разработке, аналитике и управлению. Мы растем сами и помогаем расти студентам: от новичка до уверенных профессианалов. Но самое важное остается с нами: мы верим, что в каждом уже есть сила, которая заставляет хотеть больше, целиться выше, бежать быстрее. Наша миссия - помочь встать на путь роста и начить цепочку перемен - http://netolo.gy/fyb",
-        published = "19 июля 2022",
-        likedByMe = false,
-        shares = 997,
-        likes = 999
+    private var posts = listOf(
+        Post(
+            id = 1,
+            author = "Нетология. Университет интернет-профессий будующего",
+            content = "Привет это новая Нетология! Когда-то Нетология начиналась с интенсивов по онлайн маркетингу. Затем появились курсы по дизайну, разработке, аналитике и управлению. Мы растем сами и помогаем расти студентам: от новичка до уверенных профессианалов. Но самое важное остается с нами: мы верим, что в каждом уже есть сила, которая заставляет хотеть больше, целиться выше, бежать быстрее. Наша миссия - помочь встать на путь роста и начить цепочку перемен - http://netolo.gy/fyb",
+            published = "19 июля 2022",
+            likedByMe = false,
+            shares = 997,
+            likes = 992
+        ),
+        Post(
+            id = 2,
+            author = "Нетология. Университет интернет-профессий будующего",
+            content = "В каждом есть сила и талант, чтобы добиваться больших целей. Мы помогаем найти путь развития и реализовать себя через профессию — так, как вам этого хочется",
+            published = "21 июля 2022",
+            likedByMe = false,
+            shares = 997,
+            likes = 997
+        ),
+        Post(
+            id = 3,
+            author = "Нетология. Университет интернет-профессий будующего",
+            content = "Над нашими курсами работает большая команда: авторы, методисты, продюсеры, преподаватели, маркетологи, редакторы. Каждый следит за трендами на рынке, чтобы запустить качественную программу. Мы создаём продукт, которым пользуемся сами. Мы поддерживаем в течение всего обучения. Наши кураторы, эксперты и аспиранты не дают студентам сойти с дистанции. Кроме того, мы помогаем с трудоустройством: собрать портфолио, оформить резюме и пройти собеседование. Лучшие студенты стажируются у наших партнёров.",
+            published = "23 июля 2022",
+            likedByMe = false,
+            shares = 997,
+            likes = 997
+        ),
+        Post(
+            id = 4,
+            author = "Нетология. Университет интернет-профессий будующего",
+            content = "В каждом есть сила и талант, чтобы добиваться больших целей. Мы помогаем найти путь развития и реализовать себя через профессию — так, как вам этого хочется",
+            published = "25 июля 2022",
+            likedByMe = false,
+            shares = 997,
+            likes = 997
+        )
     )
-    private val data = MutableLiveData(post)
+    private val data = MutableLiveData(posts)
 
-    override fun get(): LiveData<Post> = data
+    override fun getAll(): LiveData<List<Post>> = data
 
-    override fun like() {
-        post = if (!post.likedByMe) {
-            post.copy(likedByMe = true, likes = post.likes + 1)
-        } else {
-            post.copy(likedByMe = false, likes = post.likes - 1)
+    override fun likeById(id: Long) {
+        posts = posts.map {
+            if (it.id != id) it else {
+                if (!it.likedByMe)
+                    it.copy(likedByMe = true, likes = it.likes + 1)
+                else
+                    it.copy(likedByMe = false, likes = it.likes - 1)
+            }
+
         }
-        data.value = post
+
+        data.value = posts
     }
 
-    override fun share() {
-        post = post.copy(shares = post.shares + 1)
-        data.value = post
+    override fun share(id: Long) {
+        posts = posts.map {
+            if (it.id != id) it else it.copy(shares = it.shares + 1)
+        }
     }
 }
+

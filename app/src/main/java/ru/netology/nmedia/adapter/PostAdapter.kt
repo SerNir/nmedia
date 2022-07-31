@@ -13,13 +13,14 @@ typealias OnLikeListener = (post: Post) -> Unit
 typealias OnShareListener = (post: Post) -> Unit
 
 class PostAdapter(
-    private val onLikeListener: OnLikeListener
+    private val onLikeListener: OnLikeListener,
+    private val onShareListener: OnShareListener
 ) :
     ListAdapter<Post, PostAdapter.PostViewHolder>(PostDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PostViewHolder(binding, onLikeListener)
+        return PostViewHolder(binding, onLikeListener, onShareListener)
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
@@ -29,7 +30,8 @@ class PostAdapter(
 
     class PostViewHolder(
         private val binding: CardPostBinding,
-        private val onLikeListener: OnLikeListener
+        private val onLikeListener: OnLikeListener,
+        private val onShareListener: OnShareListener
     ) : RecyclerView.ViewHolder(binding.root) {
 
 
@@ -47,7 +49,7 @@ class PostAdapter(
                     onLikeListener(post)
                 }
                 shareImageView.setOnClickListener {
-
+                    onShareListener(post)
                 }
             }
         }

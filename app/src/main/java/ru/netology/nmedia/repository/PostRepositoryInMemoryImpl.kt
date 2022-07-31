@@ -65,6 +65,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
         posts = posts.map {
             if (it.id != id) it else it.copy(shares = it.shares + 1)
         }
+        data.value = posts
     }
 }
 

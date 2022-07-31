@@ -18,11 +18,12 @@ class MainActivity : AppCompatActivity() {
 
         val viewModel: PostViewModel by viewModels()
 
-        val adapter = PostAdapter{
-            viewModel.likeById(it.id)
-
-
+        val adapter = PostAdapter({
+             viewModel.likeById(it.id)
+        },{
+            viewModel.share(it.id)
         }
+        )
 
         binding.listRecyclerView.adapter = adapter
 

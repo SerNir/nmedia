@@ -20,10 +20,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="top"
-        app:constraint_referenced_ids="content, save" />
+        app:constraint_referenced_ids="contentEditText, saveImageButton, editTextView, editCancelButton" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/editGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="editCancelButton, editTextView"
+        />
+
+
+
+    <TextView
+        android:id="@+id/editTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/contentEditText"
+        app:layout_constraintEnd_toStartOf="@+id/editCancelButton"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="@sample/posts.json/data/content"
+        />
+
+    <ImageButton
+        android:id="@+id/editCancelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/common_spacing"
+        app:layout_constraintBottom_toTopOf="@+id/saveImageButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/ic_close_48" />
+
 
     <EditText
-        android:id="@+id/content"
+        android:id="@+id/contentEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
@@ -32,13 +63,13 @@
         android:inputType="textMultiLine"
         android:padding="@dimen/common_spacing"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/save"
+        app:layout_constraintEnd_toStartOf="@id/saveImageButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/toolsTop" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
     <ImageButton
-        android:id="@+id/save"
+        android:id="@+id/saveImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/common_spacing"
@@ -46,7 +77,7 @@
         android:contentDescription="@string/description_post_like"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/content"
+        app:layout_constraintStart_toEndOf="@id/contentEditText"
         app:srcCompat="@drawable/ic_save_48" />
 
 

@@ -13,7 +13,7 @@ private val empty = Post(
     ""
 )
 
-class PostViewModel(/*private val repository: PostRepository*/) : ViewModel() {
+class PostViewModel : ViewModel() {
     private val repository: PostRepository = PostRepositoryInMemoryImpl()
     val data = repository.getAll()
     val edited = MutableLiveData(empty)
@@ -41,4 +41,5 @@ class PostViewModel(/*private val repository: PostRepository*/) : ViewModel() {
     fun edit(post: Post) {
         edited.value = post
     }
+
 }

@@ -2,6 +2,7 @@ package ru.netology.nmedia
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 
 import androidx.activity.viewModels
@@ -9,6 +10,7 @@ import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostAdapter
 import ru.netology.nmedia.databinding.ActivityMainBinding
 import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.utils.AndroidUtils
 import ru.netology.nmedia.viewModel.PostViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -54,12 +56,23 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.edited.observe(this) {
             if (it.id != 0L) {
-                binding.content.setText(it.content)
+                binding.editGroup.visibility = View.VISIBLE
+                binding.contentEditText.setText(it.content)
             }
         }
 
-        binding.save.setOnClickListener {
-            with(binding.content) {
+
+        binding.editCancelButton.setOnClickListener {
+            with(binding.contentEditText) {
+                setText("")
+                clearFocus()
+                binding.editGroup.visibility = View.GONE
+                AndroidUtils.hideKeyboard(it)
+            }
+        }
+
+        binding.saveImageButton.setOnClickListener {
+            with(binding.contentEditText) {
                 val text = text.toString()
                 if (text.isBlank()) {
                     Toast.makeText(
@@ -69,11 +82,14 @@ class MainActivity : AppCompatActivity() {
                     ).show()
                     return@setOnClickListener
                 }
+
                 viewModel.changeContent(text)
                 viewModel.save()
 
                 setText("")
                 clearFocus()
+                binding.editGroup.visibility = View.GONE
+                AndroidUtils.hideKeyboard(it)
 
             }
 

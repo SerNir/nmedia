@@ -50,6 +50,7 @@
         android:layout_marginEnd="@dimen/common_spacing"
         android:contentDescription="@string/image_button"
         android:minHeight="48dp"
+        android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_more_vert_24" />

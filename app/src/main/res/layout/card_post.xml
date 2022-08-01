@@ -27,7 +27,7 @@
         android:ellipsize="end"
         android:singleLine="true"
         app:layout_constraintBottom_toTopOf="@+id/publishedTextView"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton"
+        app:layout_constraintEnd_toStartOf="@+id/menuImageButton"
         app:layout_constraintStart_toEndOf="@+id/logoImageView"
         app:layout_constraintTop_toTopOf="@+id/logoImageView"
         tools:text="@sample/posts.json/data/author" />
@@ -43,7 +43,7 @@
         tools:text="@sample/posts.json/data/published" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/menuImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/common_spacing"

@@ -2,4 +2,13 @@
 <resources>
     <string name="app_name">nmedia</string>
     <string name="nmedia">НМедиа!</string>
+    <string name="like_image">Нравится</string>
+    <string name="share_image">Поделится</string>
+    <string name="views_image">Просмотры</string>
+    <string name="menu_remove">Удалить</string>
+    <string name="menu_edit">Редактировать</string>
+    <string name="post_text">Текст Поста</string>
+    <string name="description_post_like">Нравится</string>
+    <string name="error_empty_content">Содержимое поста не может быть пустым</string>
+
 </resources>

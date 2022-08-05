@@ -2,10 +2,9 @@ package ru.netology.nmedia.adapter
 
 
 import android.view.LayoutInflater
-
+import android.view.MenuInflater
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
-
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -19,7 +18,6 @@ interface OnInteractionListener {
     fun onShare(post: Post)
     fun onRemove(post: Post)
     fun onEdit(post: Post)
-
 }
 
 class PostAdapter(
@@ -47,11 +45,9 @@ class PostAdapter(
                 authorTextView.text = post.author
                 publishedTextView.text = post.published
                 contentTextView.text = post.content
-                likeImageView.setImageResource(
-                    if (post.likedByMe) R.drawable.ic_liked_24 else R.drawable.ic_like_24
-                )
-                likeTextView.text = post.reducingNumber(post.likes)
-                shareTextView.text = post.reducingNumber(post.shares)
+                likeImageView.isChecked = post.likedByMe
+                likeImageView.text = post.reducingNumber(post.likes)
+                shareImageView.text = post.reducingNumber(post.shares)
                 likeImageView.setOnClickListener {
                     onInteractionListener.onLike(post)
                 }
@@ -60,10 +56,11 @@ class PostAdapter(
                 }
                 menuImageButton.setOnClickListener {
                     PopupMenu(it.context, it).apply {
-                        inflate(R.menu.options_post)
+                        val inflater: MenuInflater = menuInflater
+                        inflater.inflate(R.menu.options_post, menu)
                         setOnMenuItemClickListener { item ->
                             when (item.itemId) {
-                               R.id.remove -> {
+                                R.id.remove -> {
                                     onInteractionListener.onRemove(post)
                                     true
                                 }
@@ -72,9 +69,7 @@ class PostAdapter(
                                     true
                                 }
                                 R.id.editCancelButton -> {
-
                                     true
-
                                 }
                                 else -> false
                             }

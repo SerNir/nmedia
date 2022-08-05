@@ -39,7 +39,7 @@
         app:layout_constraintBottom_toTopOf="@+id/contentEditText"
         app:layout_constraintEnd_toStartOf="@+id/editCancelButton"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="@sample/posts.json/data/content"
+
         />
 
     <ImageButton

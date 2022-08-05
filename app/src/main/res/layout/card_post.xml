@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/common_spacing"
-  >
+    android:layout_margin="@dimen/common_spacing">
 
 
     <ImageView
@@ -42,18 +41,22 @@
         app:layout_constraintTop_toBottomOf="@+id/authorTextView"
         tools:text="@sample/posts.json/data/published" />
 
-    <ImageButton
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/menuImageButton"
+
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/common_spacing"
         android:layout_marginEnd="@dimen/common_spacing"
+        android:background="@android:color/transparent"
         android:contentDescription="@string/image_button"
         android:minHeight="48dp"
-        android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_more_vert_24" />
+        app:icon="@drawable/ic_baseline_more_vert_24"/>
+
+
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrierHead"
@@ -80,47 +83,34 @@
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="contentTextView" />
 
-    <ImageView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/likeImageView"
+        style="@style/Widget.AppTheme.LikeCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/common_spacing"
-        android:layout_marginStart="@dimen/common_spacing"
+        android:background="@android:color/transparent"
+        android:checkable="true"
         android:contentDescription="@string/like_image"
+        android:textSize="@dimen/icon_text_size"
+        app:icon="@drawable/ic_like_24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/barrierContent"
-        app:srcCompat="@drawable/ic_like_24" />
+        tools:text="10" />
 
-    <TextView
-        android:id="@+id/likeTextView"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/shareImageView"
+        style="@style/Widget.AppTheme.ShareCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/lower_spacing"
-        android:layout_marginTop="@dimen/common_spacing"
+        android:background="@android:color/transparent"
+        android:checkable="true"
+        android:contentDescription="@string/share_image"
+        android:textSize="@dimen/icon_text_size"
+        app:icon="@drawable/ic_share_24dp"
         app:layout_constraintStart_toEndOf="@id/likeImageView"
         app:layout_constraintTop_toTopOf="@id/barrierContent"
         tools:text="10" />
 
-    <ImageView
-        android:id="@+id/shareImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/common_spacing"
-        android:layout_marginStart="@dimen/common_spacing"
-        android:contentDescription="@string/share_image"
-        app:layout_constraintStart_toEndOf="@id/likeTextView"
-        app:layout_constraintTop_toTopOf="@id/barrierContent"
-        app:srcCompat="@drawable/ic_baseline_share_24" />
-
-    <TextView
-        android:id="@+id/shareTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/lower_spacing"
-        android:layout_marginTop="@dimen/common_spacing"
-        app:layout_constraintStart_toEndOf="@id/shareImageView"
-        app:layout_constraintTop_toTopOf="@id/barrierContent"
-        tools:text="2" />
 
     <TextView
         android:id="@+id/viewsTextView"

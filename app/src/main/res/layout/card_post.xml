@@ -41,20 +41,18 @@
         app:layout_constraintTop_toBottomOf="@+id/authorTextView"
         tools:text="@sample/posts.json/data/published" />
 
-    <com.google.android.material.textfield.TextInputLayout
+    <ImageButton
         android:id="@+id/menuImageButton"
-
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         android:layout_marginTop="@dimen/common_spacing"
         android:layout_marginEnd="@dimen/common_spacing"
-        android:background="@android:color/transparent"
         android:contentDescription="@string/image_button"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:icon="@drawable/ic_baseline_more_vert_24"/>
+        app:srcCompat="@drawable/ic_baseline_more_vert_24" />
 
 
 

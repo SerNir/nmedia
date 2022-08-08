@@ -68,9 +68,9 @@ class PostAdapter(
                                     onInteractionListener.onEdit(post)
                                     true
                                 }
-                                R.id.editCancelButton -> {
+                               /* R.id.editCancelButton -> {
                                     true
-                                }
+                                }*/
                                 else -> false
                             }
 

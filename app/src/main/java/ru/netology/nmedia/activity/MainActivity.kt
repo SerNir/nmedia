@@ -1,11 +1,14 @@
-package ru.netology.nmedia
+package ru.netology.nmedia.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.launch
 
 import androidx.activity.viewModels
+import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostAdapter
 import ru.netology.nmedia.databinding.ActivityMainBinding
@@ -15,12 +18,28 @@ import ru.netology.nmedia.viewModel.PostViewModel
 
 class MainActivity : AppCompatActivity() {
 
+    private val viewModel: PostViewModel by viewModels()
+
+    private val newPostContract = registerForActivityResult(NewPostActivity.Contract) { text ->
+        if (text.isNullOrBlank()) {
+            Toast.makeText(
+                this@MainActivity,
+                getString(R.string.error_empty_content),
+                Toast.LENGTH_SHORT
+            ).show()
+            return@registerForActivityResult
+        }
+
+        viewModel.changeContent(text)
+        viewModel.save()
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val viewModel: PostViewModel by viewModels()
 
         val adapter = PostAdapter(object : OnInteractionListener {
             override fun onLike(post: Post) {
@@ -28,6 +47,14 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onShare(post: Post) {
+                val intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, post.content)
+                    type = "text/plain"
+                }
+                val intentChooser =
+                    Intent.createChooser(intent, getString(R.string.choose_share_post))
+                startActivity(intentChooser)
                 viewModel.share(post.id)
             }
 
@@ -56,42 +83,22 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.edited.observe(this) {
             if (it.id != 0L) {
-                binding.editGroup.visibility = View.VISIBLE
-                binding.contentEditText.setText(it.content)
+                return@observe
             }
         }
 
 
-        binding.editCancelButton.setOnClickListener {
-            with(binding.contentEditText) {
-                setText("")
-                clearFocus()
-                binding.editGroup.visibility = View.GONE
-                AndroidUtils.hideKeyboard(it)
-            }
-        }
-
-        binding.saveImageButton.setOnClickListener {
-            with(binding.contentEditText) {
-                val text = text.toString()
-                if (text.isBlank()) {
-                    Toast.makeText(
-                        this@MainActivity,
-                        R.string.error_empty_content,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    return@setOnClickListener
-                }
-
-                viewModel.changeContent(text)
-                viewModel.save()
-
-                setText("")
-                clearFocus()
-                binding.editGroup.visibility = View.GONE
-                AndroidUtils.hideKeyboard(it)
-
-            }
+        /* binding.editCancelButton.setOnClickListener {
+             with(binding.contentEditText) {
+                 setText("")
+                 clearFocus()
+                 binding.editGroup.visibility = View.GONE
+                 AndroidUtils.hideKeyboard(it)
+             }
+         }
+ */
+        binding.add.setOnClickListener {
+            newPostContract.launch()
         }
     }
 }

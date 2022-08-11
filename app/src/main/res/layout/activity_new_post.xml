@@ -10,6 +10,7 @@
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
         android:gravity="top"
+        android:text=""
         android:hint="@string/post_text"
         android:importantForAutofill="no"
         android:inputType="textMultiLine"

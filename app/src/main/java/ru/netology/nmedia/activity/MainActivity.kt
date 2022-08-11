@@ -30,8 +30,8 @@ class MainActivity : AppCompatActivity() {
             return@registerForActivityResult
         }
 
-        viewModel.changeContent(text)
-        viewModel.save()
+        viewModel.changeContentAndSave(text)
+
 
     }
 
@@ -63,6 +63,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onEdit(post: Post) {
+
                 viewModel.edit(post)
             }
 
@@ -82,9 +83,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.edited.observe(this) {
-            if (it.id != 0L) {
+            if (it.id == 0L) {
                 return@observe
             }
+            newPostContract.launch(it.content)
         }
 
 
@@ -98,7 +100,7 @@ class MainActivity : AppCompatActivity() {
          }
  */
         binding.add.setOnClickListener {
-            newPostContract.launch()
+            newPostContract.launch("")
         }
     }
 }

@@ -73,6 +73,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/barrierHead"
         tools:text="@sample/posts.json/data/content" />
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/videoGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="videoView, playButton"
+        />
+
+    <ImageView
+        android:id="@+id/videoView"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:src="@drawable/netology"
+        app:layout_constraintTop_toBottomOf="@+id/contentTextView"
+        app:layout_constraintBottom_toTopOf="@+id/likeImageView"
+        />
+
+    <ImageButton
+        android:id="@+id/playButton"
+        app:layout_constraintTop_toTopOf="@+id/videoView"
+        app:layout_constraintBottom_toBottomOf="@+id/videoView"
+        app:layout_constraintStart_toStartOf="@+id/videoView"
+        app:layout_constraintEnd_toEndOf="@+id/videoView"
+        android:src="@drawable/ic_play_circle_48"
+        android:background="@android:color/transparent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrierContent"

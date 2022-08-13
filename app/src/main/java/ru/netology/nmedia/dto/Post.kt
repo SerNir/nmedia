@@ -9,7 +9,8 @@ data class Post(
     var shares: Long = 0,
     var views: Long = 0,
     var likedByMe: Boolean = false,
-    var sharedByMe: Boolean = false
+    var sharedByMe: Boolean = false,
+    var video: String = ""
 ) {
     fun reducingNumber(value: Long): String {
         val second = value.toString().toCharArray()

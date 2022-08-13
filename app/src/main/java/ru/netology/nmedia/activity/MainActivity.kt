@@ -1,6 +1,8 @@
 package ru.netology.nmedia.activity
 
 import android.content.Intent
+import android.content.Intent.ACTION_VIEW
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -67,6 +69,12 @@ class MainActivity : AppCompatActivity() {
                 viewModel.edit(post)
             }
 
+            override fun playVideo(post: Post) {
+                val intent = Intent(ACTION_VIEW, Uri.parse(post.video))
+                val intentChooser = Intent.createChooser(intent, getString(R.string.play_video))
+                startActivity(intentChooser)
+            }
+
         }
         )
 
@@ -90,17 +98,13 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        /* binding.editCancelButton.setOnClickListener {
-             with(binding.contentEditText) {
-                 setText("")
-                 clearFocus()
-                 binding.editGroup.visibility = View.GONE
-                 AndroidUtils.hideKeyboard(it)
-             }
-         }
- */
+
         binding.add.setOnClickListener {
             newPostContract.launch("")
         }
+
+
     }
+
+
 }

@@ -1,9 +1,12 @@
 package ru.netology.nmedia.adapter
 
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.MenuInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.MediaController
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -18,6 +21,7 @@ interface OnInteractionListener {
     fun onShare(post: Post)
     fun onRemove(post: Post)
     fun onEdit(post: Post)
+    fun playVideo(post: Post)
 }
 
 class PostAdapter(
@@ -68,15 +72,24 @@ class PostAdapter(
                                     onInteractionListener.onEdit(post)
                                     true
                                 }
-                               /* R.id.editCancelButton -> {
-                                    true
-                                }*/
+
                                 else -> false
                             }
 
                         }
                     }.show()
                 }
+                    if (!post.video.isNullOrBlank()){
+                        binding.videoGroup.visibility = View.VISIBLE
+                }
+
+                binding.playButton.setOnClickListener {
+                    onInteractionListener.playVideo(post)
+                }
+                binding.videoView.setOnClickListener {
+                    onInteractionListener.playVideo(post)
+                }
+
 
             }
         }

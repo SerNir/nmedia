@@ -1,5 +1,6 @@
 package ru.netology.nmedia.activity
 
+import android.content.Context
 import android.content.Intent
 import android.content.Intent.ACTION_VIEW
 import android.net.Uri
@@ -41,6 +42,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        run{
+            val preference = getPreferences(Context.MODE_PRIVATE)
+            preference.edit().apply {
+                putString("key", "value")
+                commit()
+            }
+        }
 
 
         val adapter = PostAdapter(object : OnInteractionListener {
@@ -98,7 +107,15 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-
+        /* binding.editCancelButton.setOnClickListener {
+             with(binding.contentEditText) {
+                 setText("")
+                 clearFocus()
+                 binding.editGroup.visibility = View.GONE
+                 AndroidUtils.hideKeyboard(it)
+             }
+         }
+ */
         binding.add.setOnClickListener {
             newPostContract.launch("")
         }

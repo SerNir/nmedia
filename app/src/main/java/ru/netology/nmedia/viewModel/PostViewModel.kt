@@ -17,7 +17,7 @@ private val empty = Post(
 )
 
 class PostViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository: PostRepository = PostRepositoryFileImpl(application)
+    private val repository: PostRepository = PostRepositoryInMemoryImpl()
     val data = repository.getAll()
     val edited = MutableLiveData(empty)
 
@@ -32,13 +32,6 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             }
             edited.value = empty
         }
-    }
-
-    fun save() {
-        edited.value?.let {
-            repository.save(it)
-        }
-        edited.value = empty
     }
 
     fun likeById(id: Long) = repository.likeById(id)

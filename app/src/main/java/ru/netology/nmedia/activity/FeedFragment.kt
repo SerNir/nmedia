@@ -1,56 +1,52 @@
 package ru.netology.nmedia.activity
 
-import android.content.Context
 import android.content.Intent
 import android.content.Intent.ACTION_VIEW
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.launch
 
-import androidx.activity.viewModels
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.R
+import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostAdapter
-import ru.netology.nmedia.databinding.ActivityMainBinding
+import ru.netology.nmedia.databinding.FragmentFeedBinding
 import ru.netology.nmedia.dto.Post
-import ru.netology.nmedia.utils.AndroidUtils
 import ru.netology.nmedia.viewModel.PostViewModel
 
-class MainActivity : AppCompatActivity() {
+class FeedFragment : Fragment() {
 
-    private val viewModel: PostViewModel by viewModels()
+    private val viewModel: PostViewModel by viewModels(
+        ownerProducer = ::requireParentFragment
+    )
 
-    private val newPostContract = registerForActivityResult(NewPostActivity.Contract) { text ->
-        if (text.isNullOrBlank()) {
-            Toast.makeText(
-                this@MainActivity,
-                getString(R.string.error_empty_content),
-                Toast.LENGTH_SHORT
-            ).show()
-            return@registerForActivityResult
-        }
-
-        viewModel.changeContentAndSave(text)
-
-
+    companion object{
+        private const val TEXT_KEY = "TEXT_KEY"
+        var Bundle.textArg: String?
+        set(value) = putString(TEXT_KEY, value)
+        get() = getString(TEXT_KEY)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
-        run{
-            val preference = getPreferences(Context.MODE_PRIVATE)
-            preference.edit().apply {
-                putString("key", "value")
-                commit()
-            }
-        }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val binding = FragmentFeedBinding.inflate(
+            inflater,
+            container,
+            false
+        )
 
         val adapter = PostAdapter(object : OnInteractionListener {
             override fun onLike(post: Post) {
@@ -89,7 +85,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.listRecyclerView.adapter = adapter
 
-        viewModel.data.observe(this) { posts ->
+        viewModel.data.observe(viewLifecycleOwner) { posts ->
             val newPost = adapter.itemCount < posts.size
             adapter.submitList(posts) {
                 if (newPost) {
@@ -99,29 +95,25 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.edited.observe(this) {
+        viewModel.edited.observe(viewLifecycleOwner) {
             if (it.id == 0L) {
                 return@observe
             }
-            newPostContract.launch(it.content)
+
+
+            if (it.content?.isNotBlank()==true){
+                findNavController().navigate(R.id.action_feedFragment_to_newPostFragment,
+                Bundle().apply {
+                    textArg = it.content
+                })
+            }
         }
 
-
-        /* binding.editCancelButton.setOnClickListener {
-             with(binding.contentEditText) {
-                 setText("")
-                 clearFocus()
-                 binding.editGroup.visibility = View.GONE
-                 AndroidUtils.hideKeyboard(it)
-             }
-         }
- */
         binding.add.setOnClickListener {
-            newPostContract.launch("")
+            findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
         }
 
 
+        return binding.root
     }
-
-
 }

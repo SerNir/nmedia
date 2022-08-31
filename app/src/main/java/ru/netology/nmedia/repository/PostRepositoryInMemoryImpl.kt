@@ -1,7 +1,10 @@
 package ru.netology.nmedia.repository
 
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import ru.netology.nmedia.activity.AppActivity
+import ru.netology.nmedia.activity.FeedFragment
 import ru.netology.nmedia.dto.Post
 
 class PostRepositoryInMemoryImpl : PostRepository {
@@ -86,4 +89,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
 
         data.value = posts
     }
+
+    override fun getPostById(id: Long) = posts[id.toInt()-1]
+
 }

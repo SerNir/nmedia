@@ -68,6 +68,8 @@ class PostRepositorySharedPreferenceImpl(context: Context) : PostRepository {
         sync()
     }
 
+    override fun getPostById(id: Long)= posts[id.toInt()-1]
+
     private fun sync(){
         with(prefs.edit()){
             putString(key, gson.toJson(posts))

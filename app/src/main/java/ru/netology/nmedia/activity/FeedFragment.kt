@@ -4,18 +4,14 @@ import android.content.Intent
 import android.content.Intent.ACTION_VIEW
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.R
-import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostAdapter
 import ru.netology.nmedia.databinding.FragmentFeedBinding
@@ -33,9 +29,12 @@ class FeedFragment : Fragment() {
         var Bundle.textArg: String?
         set(value) = putString(TEXT_KEY, value)
         get() = getString(TEXT_KEY)
+
+        private const val POST_ID = "POST_ID"
+        var Bundle.longArg: Long
+            set(value) = putLong(POST_ID, value)
+            get() = getLong(TEXT_KEY)
     }
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,6 +46,8 @@ class FeedFragment : Fragment() {
             container,
             false
         )
+
+
 
         val adapter = PostAdapter(object : OnInteractionListener {
             override fun onLike(post: Post) {
@@ -80,6 +81,13 @@ class FeedFragment : Fragment() {
                 startActivity(intentChooser)
             }
 
+            override fun openPost(post: Post) {
+                findNavController().navigate(R.id.action_feedFragment_to_postFragment,
+                Bundle().apply {
+                    longArg = post.id
+                })
+            }
+
         }
         )
 
@@ -104,7 +112,7 @@ class FeedFragment : Fragment() {
             if (it.content?.isNotBlank()==true){
                 findNavController().navigate(R.id.action_feedFragment_to_newPostFragment,
                 Bundle().apply {
-                    textArg = it.content
+                   textArg = it.content
                 })
             }
         }
@@ -112,6 +120,7 @@ class FeedFragment : Fragment() {
         binding.add.setOnClickListener {
             findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
         }
+
 
 
         return binding.root

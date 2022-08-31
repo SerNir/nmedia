@@ -22,6 +22,7 @@ interface OnInteractionListener {
     fun onRemove(post: Post)
     fun onEdit(post: Post)
     fun playVideo(post: Post)
+    fun openPost(post: Post)
 }
 
 class PostAdapter(
@@ -72,9 +73,7 @@ class PostAdapter(
                                     onInteractionListener.onEdit(post)
                                     true
                                 }
-                               /* R.id.editCancelButton -> {
-                                    true
-                                }*/
+
                                 else -> false
                             }
 
@@ -90,6 +89,10 @@ class PostAdapter(
                 }
                 binding.videoView.setOnClickListener {
                     onInteractionListener.playVideo(post)
+                }
+
+                binding.contentTextView.setOnClickListener {
+                    onInteractionListener.openPost(post)
                 }
 
 

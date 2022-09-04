@@ -51,13 +51,12 @@ class NewPostFragment : Fragment() {
             if (text.isNotBlank()){
                 viewModel.changeContentAndSave(text)
                 AndroidUtils.hideKeyboard(requireView())
-                findNavController().navigateUp()
+//                findNavController().navigateUp()
             }else{
                 Toast.makeText(activity,
                     getString(R.string.error_empty_content),
                     Toast.LENGTH_SHORT).show()
             }
-
 
         }
 

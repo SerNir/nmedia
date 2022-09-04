@@ -52,9 +52,13 @@ class PostFragment : Fragment() {
         val id = arguments?.getLong("POST_ID")
 //        id?.let { viewModel.searchPostById(it) }
         Log.d("show id", "$id")
-        val post = id?.let { it -> viewModel.searchPostById(it) }
+
 
         viewModel.data.observe(viewLifecycleOwner) {
+
+            val post = id?.let { it -> viewModel.searchPostById(it) }
+
+
             Log.d("show", "$post")
             with(binding) {
                 authorTextView.text = post?.author
@@ -67,7 +71,17 @@ class PostFragment : Fragment() {
                     post?.id?.let { it1 -> viewModel.likeById(it1) }
                 }
                 shareImageView.setOnClickListener {
-                    post?.let { it1 -> viewModel.share(it1.id) }
+
+                    post?.let { it1 ->
+                        val intent = Intent().apply {
+                            action = Intent.ACTION_SEND
+                            putExtra(Intent.EXTRA_TEXT, post.content)
+                            type = "text/plain"
+                        }
+                        val intentChooser =
+                            Intent.createChooser(intent, getString(R.string.choose_share_post))
+                        startActivity(intentChooser)
+                        viewModel.share(it1.id) }
                 }
                 menuImageButton.setOnClickListener {
                     PopupMenu(it.context, it).apply {
@@ -76,12 +90,13 @@ class PostFragment : Fragment() {
                         setOnMenuItemClickListener { item ->
                             when (item.itemId) {
                                 R.id.remove -> {
-                                    post?.let { it1 -> viewModel.removeById(it1.id) }
-                                    findNavController().navigate(R.id.action_postFragment_to_feedFragment)
+                                    post?.let { it -> viewModel.removeById(it.id) }
+                                    findNavController().navigateUp()
                                     true
                                 }
                                 R.id.edit -> {
-                                    post?.let { it1 -> viewModel.edit(it1) }
+                                    post?.let { it -> viewModel.edit(it) }
+                                    findNavController().navigateUp()
                                     true
                                 }
 

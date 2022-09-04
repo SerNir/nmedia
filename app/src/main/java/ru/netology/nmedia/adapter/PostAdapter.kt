@@ -99,9 +99,7 @@ class PostAdapter(
             }
         }
     }
-
 }
-
 
 class PostDiffUtil : DiffUtil.ItemCallback<Post>() {
     override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {

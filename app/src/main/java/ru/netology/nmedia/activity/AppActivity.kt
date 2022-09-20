@@ -14,13 +14,6 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        val rootFragmentName = "root"
-//        val fragmentToRemove = "tag"
-//        supportFragmentManager.commit {
-//            add(findViewById(R.id.nav_host_fragment), fragmentToRemove)
-//            addToBackStack(rootFragmentName)
-//        }
-
         intent?.let {
             if (it.action != Intent.ACTION_SEND){
                 return@let
@@ -38,14 +31,4 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
         }
     }
 
-
-//    override fun onBackPressed() {
-//
-//        val rootFragmentName = "root"
-//        supportFragmentManager.popBackStack(
-//            rootFragmentName,
-//            FragmentManager.POP_BACK_STACK_INCLUSIVE
-//        )
-//        super.onBackPressed()
-//    }
 }

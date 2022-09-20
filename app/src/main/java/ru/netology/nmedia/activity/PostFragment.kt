@@ -1,10 +1,7 @@
 package ru.netology.nmedia.activity
 
 import android.content.Intent
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuInflater
 import android.view.View
@@ -14,14 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.R
-import ru.netology.nmedia.activity.FeedFragment.Companion.longArg
-import ru.netology.nmedia.adapter.OnInteractionListener
-import ru.netology.nmedia.adapter.PostAdapter
 import ru.netology.nmedia.databinding.CardPostBinding
 
-import ru.netology.nmedia.databinding.FragmentPostBinding
-
-import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.viewModel.PostViewModel
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
@@ -50,16 +41,12 @@ class PostFragment : Fragment() {
 
 
         val id = arguments?.getLong("POST_ID")
-//        id?.let { viewModel.searchPostById(it) }
-        Log.d("show id", "$id")
 
 
         viewModel.data.observe(viewLifecycleOwner) {
 
-            val post = id?.let { it -> viewModel.searchPostById(it) }
+            val post = id?.let { id -> viewModel.searchPostById(id) }
 
-
-            Log.d("show", "$post")
             with(binding) {
                 authorTextView.text = post?.author
                 publishedTextView.text = post?.published
@@ -68,11 +55,11 @@ class PostFragment : Fragment() {
                 likeImageView.text = post?.reducingNumber(post.likes)
                 shareImageView.text = post?.reducingNumber(post.shares)
                 likeImageView.setOnClickListener {
-                    post?.id?.let { it1 -> viewModel.likeById(it1) }
+                    post?.id?.let { id -> viewModel.likeById(id) }
                 }
                 shareImageView.setOnClickListener {
 
-                    post?.let { it1 ->
+                    post?.let { post ->
                         val intent = Intent().apply {
                             action = Intent.ACTION_SEND
                             putExtra(Intent.EXTRA_TEXT, post.content)
@@ -81,7 +68,7 @@ class PostFragment : Fragment() {
                         val intentChooser =
                             Intent.createChooser(intent, getString(R.string.choose_share_post))
                         startActivity(intentChooser)
-                        viewModel.share(it1.id) }
+                        viewModel.share(post.id) }
                 }
                 menuImageButton.setOnClickListener {
                     PopupMenu(it.context, it).apply {

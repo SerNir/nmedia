@@ -71,8 +71,8 @@ class FeedFragment : Fragment() {
             }
 
             override fun onEdit(post: Post) {
-
                 viewModel.edit(post)
+
             }
 
             override fun playVideo(post: Post) {

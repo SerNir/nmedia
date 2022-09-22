@@ -38,9 +38,9 @@ class NewPostFragment : Fragment() {
 
 
 
-//        var text = arguments?.getString("TEXT_KEY")
-//        binding.contentEditText.setText(text)
-        arguments?.textArg?.let(binding.contentEditText::setText)
+        var text = arguments?.getString("TEXT_KEY")
+        binding.contentEditText.setText(text)
+//        arguments?.textArg?.let(binding.contentEditText::setText)
 
         binding.ok.setOnClickListener {
             val text = binding.contentEditText.text.toString()

@@ -158,6 +158,18 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
 
 
     override fun getPostById(id: Long): Post? {
-        TODO("Not yet implemented")
+
+         db.query(PostColumn.TABLE,
+             PostColumn.ALL_COLUMNS,
+             "${PostColumn.COLUMN_ID} = $id",
+             arrayOf(id.toString()),
+             null,
+             null,
+             null,
+        ).use {
+            it.moveToNext()
+             return map(it)
+         }
+
     }
 }

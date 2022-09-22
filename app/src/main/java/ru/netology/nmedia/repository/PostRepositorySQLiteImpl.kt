@@ -46,7 +46,6 @@ class PostRepositorySQLiteImpl(
     }
 
     override fun save(post: Post) {
-        dao.save(post)
         val id = post.id
         val saved = dao.save(post)
         posts = if (id == 0L) {
@@ -60,7 +59,7 @@ class PostRepositorySQLiteImpl(
     }
 
     override fun getPostById(id: Long): Post {
-        dao.getPostById(id)
-        return posts[id.toInt() - 1]
+        posts = posts.filter { it.id == id }
+        return posts[0]
     }
 }

@@ -13,9 +13,9 @@ import ru.netology.nmedia.repository.PostRepositorySQLiteImpl
 
 private val empty = Post(
     0,
+    "Netology",
     "",
-    "",
-    ""
+    "Now"
 )
 
 class PostViewModel(application: Application) : AndroidViewModel(application) {
@@ -29,11 +29,11 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         edited.value?.let { post ->
             val text = content.trim()
             if (post.content == text) {
-                edited.value = edited.value?.copy(content = text)
+
                 return
             }
             edited.value?.let {
-                repository.save(it)
+                repository.save(post.copy(content = text))
             }
             edited.value = empty
         }

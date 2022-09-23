@@ -59,7 +59,7 @@ class PostRepositorySQLiteImpl(
     }
 
     override fun getPostById(id: Long): Post {
-        posts = posts.filter { it.id == id }
-        return posts[0]
+        val result = posts.filter { it.id == id }
+        return result[0]
     }
 }

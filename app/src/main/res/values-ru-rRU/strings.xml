@@ -13,5 +13,9 @@
     <string name="choose_share_post">Поделится постом</string>
     <string name="add_post">Добавить пост</string>
     <string name="play_video">Воспроизвести видео</string>
+    <string name="google_api_unavailable">Гугл сервисы не поддерживаются</string>
+    <string name="channel_remote_name">Уведомления с сервера</string>
+    <string name="channal_remote_description">Уведомления с удаленного сервера</string>
+    <string name="notification_user_liked">Пользователь %1$s поставил лайк %2$s посту</string>
 
 </resources>

@@ -43,9 +43,9 @@ class NewPostFragment : Fragment() {
 //        arguments?.textArg?.let(binding.contentEditText::setText)
 
         binding.ok.setOnClickListener {
-            val text = binding.contentEditText.text.toString()
-            if (text.isNotBlank()){
-                viewModel.changeContentAndSave(text)
+            val text1 = binding.contentEditText.text.toString()
+            if (text1.isNotBlank()){
+                viewModel.changeContentAndSave(text1)
                 AndroidUtils.hideKeyboard(requireView())
                 findNavController().navigateUp()
             }else{

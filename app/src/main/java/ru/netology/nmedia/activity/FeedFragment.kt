@@ -109,7 +109,7 @@ class FeedFragment : Fragment() {
             }
 
 
-            if (it.content?.isNotBlank()==true){
+            if (it.content.isNotBlank()==true){
                 findNavController().navigate(R.id.action_feedFragment_to_newPostFragment,
                 Bundle().apply {
                    textArg = it.content

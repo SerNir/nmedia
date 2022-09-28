@@ -72,8 +72,8 @@ class PostFragment : Fragment() {
                 }
                 menuImageButton.setOnClickListener {
                     PopupMenu(it.context, it).apply {
-                        val inflater: MenuInflater = menuInflater
-                        inflater.inflate(R.menu.options_post, menu)
+                        val inflater1: MenuInflater = menuInflater
+                        inflater1.inflate(R.menu.options_post, menu)
                         setOnMenuItemClickListener { item ->
                             when (item.itemId) {
                                 R.id.remove -> {

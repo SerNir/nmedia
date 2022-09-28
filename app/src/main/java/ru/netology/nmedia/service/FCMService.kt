@@ -42,7 +42,7 @@ class FCMService : FirebaseMessagingService() {
 
     private fun handleLike(content: Like?) {
         val notification = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.ic_notification)
+//            .setSmallIcon(R.drawable.ic_notification_icon)
             .setContentTitle(
                 getString(
                     R.string.notification_user_liked,

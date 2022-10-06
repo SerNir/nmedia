@@ -20,7 +20,7 @@ class FCMService : FirebaseMessagingService() {
 
     override fun onCreate() {
         super.onCreate()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = getString(R.string.channel_remote_name)
             val descriptionText = getString(R.string.channal_remote_description)
             val importance = NotificationManager.IMPORTANCE_DEFAULT

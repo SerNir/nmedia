@@ -17,5 +17,8 @@
     <string name="channel_remote_name">Уведомления с сервера</string>
     <string name="channal_remote_description">Уведомления с удаленного сервера</string>
     <string name="notification_user_liked">Пользователь %1$s поставил лайк %2$s посту</string>
+    <string name="error_loading">Что то пошло не так. Попробуйте позжу</string>
+    <string name="retry_loading">Повторить</string>
+    <string name="empty_text">Постов нет.\nЕсли создадите новый пост, то он появится здесь</string>
 
 </resources>

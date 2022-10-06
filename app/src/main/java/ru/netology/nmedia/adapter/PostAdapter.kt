@@ -1,12 +1,9 @@
 package ru.netology.nmedia.adapter
 
-
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.MediaController
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -48,7 +45,7 @@ class PostAdapter(
         fun bind(post: Post) {
             binding.apply {
                 authorTextView.text = post.author
-                publishedTextView.text = post.published
+                publishedTextView.text = post.published.toString()
                 contentTextView.text = post.content
                 likeImageView.isChecked = post.likedByMe
                 likeImageView.text = post.reducingNumber(post.likes)
@@ -80,8 +77,8 @@ class PostAdapter(
                         }
                     }.show()
                 }
-                    if (!post.video.isNullOrBlank()){
-                        binding.videoGroup.visibility = View.VISIBLE
+                if (!post.video.isNullOrBlank()) {
+                    binding.videoGroup.visibility = View.VISIBLE
                 }
 
                 binding.playButton.setOnClickListener {

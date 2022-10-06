@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -24,11 +25,11 @@ class FeedFragment : Fragment() {
         ownerProducer = ::requireParentFragment
     )
 
-    companion object{
+    companion object {
         private const val TEXT_KEY = "TEXT_KEY"
         var Bundle.textArg: String?
-        set(value) = putString(TEXT_KEY, value)
-        get() = getString(TEXT_KEY)
+            set(value) = putString(TEXT_KEY, value)
+            get() = getString(TEXT_KEY)
 
         private const val POST_ID = "POST_ID"
         var Bundle.longArg: Long
@@ -48,10 +49,13 @@ class FeedFragment : Fragment() {
         )
 
 
-
         val adapter = PostAdapter(object : OnInteractionListener {
             override fun onLike(post: Post) {
-                viewModel.likeById(post.id)
+                if (!post.likedByMe) {
+                    viewModel.likeById(post.id)
+                } else {
+                    viewModel.dislikedById(post.id)
+                }
             }
 
             override fun onShare(post: Post) {
@@ -83,9 +87,9 @@ class FeedFragment : Fragment() {
 
             override fun openPost(post: Post) {
                 findNavController().navigate(R.id.action_feedFragment_to_postFragment,
-                Bundle().apply {
-                    longArg = post.id
-                })
+                    Bundle().apply {
+                        longArg = post.id
+                    })
             }
 
         }
@@ -93,14 +97,15 @@ class FeedFragment : Fragment() {
 
         binding.listRecyclerView.adapter = adapter
 
-        viewModel.data.observe(viewLifecycleOwner) { posts ->
-            val newPost = adapter.itemCount < posts.size
-            adapter.submitList(posts) {
-                if (newPost) {
-                    binding.listRecyclerView.smoothScrollToPosition(0)
-                }
+        viewModel.data.observe(viewLifecycleOwner) { state ->
+            adapter.submitList(state.posts)
+            binding.progress.isVisible = state.loading
+            binding.errorLoadingGroup.isVisible = state.error
+            binding.emptyText.isVisible = state.empty
+        }
 
-            }
+        binding.retryButton.setOnClickListener {
+            viewModel.loadPosts()
         }
 
         viewModel.edited.observe(viewLifecycleOwner) {
@@ -108,19 +113,26 @@ class FeedFragment : Fragment() {
                 return@observe
             }
 
-
-            if (it.content.isNotBlank()==true){
+            if (it.content.isNotBlank() == true) {
                 findNavController().navigate(R.id.action_feedFragment_to_newPostFragment,
-                Bundle().apply {
-                   textArg = it.content
-                })
+                    Bundle().apply {
+                        textArg = it.content
+                    })
             }
+        }
+
+        binding.retryButton.setOnClickListener {
+            viewModel.loadPosts()
         }
 
         binding.add.setOnClickListener {
             findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
         }
 
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.loadPosts()
+            binding.swipeRefresh.isRefreshing = false
+        }
 
 
         return binding.root

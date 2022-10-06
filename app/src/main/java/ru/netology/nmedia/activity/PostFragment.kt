@@ -49,7 +49,7 @@ class PostFragment : Fragment() {
 
             with(binding) {
                 authorTextView.text = post?.author
-                publishedTextView.text = post?.published
+                publishedTextView.text = post?.published.toString()
                 contentTextView.text = post?.content
                 likeImageView.isChecked = post?.likedByMe ?: false
                 likeImageView.text = post?.reducingNumber(post.likes)
@@ -68,7 +68,8 @@ class PostFragment : Fragment() {
                         val intentChooser =
                             Intent.createChooser(intent, getString(R.string.choose_share_post))
                         startActivity(intentChooser)
-                        viewModel.share(post.id) }
+                        viewModel.share(post.id)
+                    }
                 }
                 menuImageButton.setOnClickListener {
                     PopupMenu(it.context, it).apply {

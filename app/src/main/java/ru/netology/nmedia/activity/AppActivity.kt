@@ -16,11 +16,11 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
         super.onCreate(savedInstanceState)
 
         intent?.let {
-            if (it.action != Intent.ACTION_SEND){
+            if (it.action != Intent.ACTION_SEND) {
                 return@let
             }
             val text = it.getStringExtra(Intent.EXTRA_TEXT)
-            if (text?.isNotBlank()==true){
+            if (text?.isNotBlank() == true) {
                 intent.removeExtra(Intent.EXTRA_TEXT)
                 findNavController(R.id.nav_host_fragment).navigate(
                     R.id.action_feedFragment_to_newPostFragment,
@@ -34,16 +34,17 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
     }
 
     private fun checkGoogleApiAvailability() {
-        with(GoogleApiAvailability.getInstance()){
+        with(GoogleApiAvailability.getInstance()) {
             val code = isGooglePlayServicesAvailable(this@AppActivity)
-            if (code == ConnectionResult.SUCCESS){
+            if (code == ConnectionResult.SUCCESS) {
                 return@with
             }
-            if (isUserResolvableError(code)){
+            if (isUserResolvableError(code)) {
                 getErrorDialog(this@AppActivity, code, 9000)?.show()
                 return
             }
-            Toast.makeText(this@AppActivity, R.string.google_api_unavailable, Toast.LENGTH_LONG).show()
+            Toast.makeText(this@AppActivity, R.string.google_api_unavailable, Toast.LENGTH_LONG)
+                .show()
 
 
         }

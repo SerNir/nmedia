@@ -18,7 +18,6 @@ interface OnInteractionListener {
     fun onShare(post: Post)
     fun onRemove(post: Post)
     fun onEdit(post: Post)
-    fun playVideo(post: Post)
     fun openPost(post: Post)
 }
 
@@ -77,16 +76,7 @@ class PostAdapter(
                         }
                     }.show()
                 }
-                if (!post.video.isNullOrBlank()) {
-                    binding.videoGroup.visibility = View.VISIBLE
-                }
 
-                binding.playButton.setOnClickListener {
-                    onInteractionListener.playVideo(post)
-                }
-                binding.videoView.setOnClickListener {
-                    onInteractionListener.playVideo(post)
-                }
 
                 binding.contentTextView.setOnClickListener {
                     onInteractionListener.openPost(post)

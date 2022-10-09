@@ -86,12 +86,44 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun likeById(id: Long) {
-        thread { repository.likeById(id) }
+        thread {
+
+            val old = _data.value?.posts.orEmpty()
+            _data.postValue(
+                _data.value?.copy(posts = _data.value?.posts.orEmpty()
+                    .map {
+                        if (it.id == id) it.copy(likedByMe = true, likes = it.likes + 1) else it
+                    }
+                )
+            )
+            try {
+                repository.likeById(id)
+            } catch (e: IOException) {
+                _data.postValue(_data.value?.copy(posts = old))
+            }
+        }
 
     }
 
     fun dislikedById(id: Long) {
-        thread { repository.dislikeById(id) }
+        thread {
+            val old = _data.value?.posts.orEmpty()
+            _data.postValue(
+                _data.value?.copy(posts = _data.value?.posts.orEmpty()
+                    .map {
+                        if (it.id == id) it.copy(
+                            likedByMe = false,
+                            likes = it.likes - 1
+                        ) else it
+                    }
+                )
+            )
+            try {
+                repository.dislikeById(id)
+            } catch (e: IOException) {
+                _data.postValue(_data.value?.copy(posts = old))
+            }
+        }
     }
 
     fun share(id: Long) = repository.share(id)
@@ -119,9 +151,11 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
 
     fun searchPostById(id: Long): Post? {
         var post = null
-        thread {
-            post = repository.getPostById(id) as Nothing?
-        }
+//        val thread = Thread{
+//            post = repository.getPostById(id) as Nothing?
+//        }
+//        thread.start()
+//        thread.join()
 
         return post
     }

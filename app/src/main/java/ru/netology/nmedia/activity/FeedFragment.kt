@@ -79,11 +79,7 @@ class FeedFragment : Fragment() {
 
             }
 
-            override fun playVideo(post: Post) {
-                val intent = Intent(ACTION_VIEW, Uri.parse(post.video))
-                val intentChooser = Intent.createChooser(intent, getString(R.string.play_video))
-                startActivity(intentChooser)
-            }
+
 
             override fun openPost(post: Post) {
                 findNavController().navigate(R.id.action_feedFragment_to_postFragment,

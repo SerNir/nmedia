@@ -43,7 +43,8 @@ class PostRepositoryImpl : PostRepository {
 
         client.newCall(request)
             .execute()
-            .close()
+            .let { it.body?.string() ?: throw java.lang.RuntimeException("body is null") }
+            .let { gson.fromJson(it, Post::class.java) }
     }
 
     override fun dislikeById(id: Long) {

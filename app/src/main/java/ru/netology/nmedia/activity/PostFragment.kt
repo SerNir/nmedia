@@ -94,11 +94,6 @@ class PostFragment : Fragment() {
                         }
                     }.show()
                 }
-                if (!post?.video.isNullOrBlank()) {
-                    binding.videoGroup.visibility = View.VISIBLE
-                }
-
-
             }
         }
 

@@ -14,6 +14,7 @@ import ru.netology.nmedia.utils.SingleLiveEvent
 private val empty = Post(
     0,
     "Netology",
+    "Netology",
     "",
     10L
 )

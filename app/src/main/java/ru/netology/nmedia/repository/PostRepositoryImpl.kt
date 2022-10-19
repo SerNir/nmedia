@@ -88,6 +88,8 @@ class PostRepositoryImpl : PostRepository {
             })
     }
 
+
+
     override fun removeByIdAsync(id: Long, callback: PostRepository.GetCallback<Unit>) {
         val request: Request = Request.Builder()
             .delete()

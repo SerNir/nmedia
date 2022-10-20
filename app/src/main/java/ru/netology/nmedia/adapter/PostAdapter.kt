@@ -45,8 +45,7 @@ class PostAdapter(
         private val onInteractionListener: OnInteractionListener
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        private val urls = listOf("netology.jpg", "sber.jpg", "tcs.jpg")
-        private var index = 0
+        private var url = "http://10.0.2.2:9999"
 
         fun bind(post: Post) {
             binding.apply {
@@ -88,10 +87,22 @@ class PostAdapter(
                     onInteractionListener.openPost(post)
                 }
 
+                if (post.attachment != null){
+                    attachmentGroup.visibility = View.VISIBLE
 
-                var url = "http://10.0.2.2:9999/avatars/${post.authorAvatar}"
+                }
+                attachmentTextView.text = post.attachment?.description.toString()
+
+                Glide.with(binding.attachmentImageView)
+                    .load("$url/images/${post.attachment?.url}")
+                    .timeout(10_000)
+                    .into(binding.attachmentImageView)
+
+
+
+
                 Glide.with(binding.logoImageView)
-                    .load(url)
+                    .load("$url/avatars/${post.authorAvatar}")
                     .placeholder(R.drawable.ic_download_24)
                     .error(R.drawable.ic_error_download_24)
                     .circleCrop()

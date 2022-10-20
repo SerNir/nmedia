@@ -1,5 +1,8 @@
 package ru.netology.nmedia.dto
 
+import androidx.room.Embedded
+import androidx.room.TypeConverter
+
 data class Post(
     val id: Long,
     val author: String,
@@ -11,8 +14,16 @@ data class Post(
     var views: Long = 0,
     var likedByMe: Boolean = false,
     var sharedByMe: Boolean = false,
+    @Embedded
+    var attachment: Attachment? = null
 
-) {
+    ) {
+    data class Attachment(
+        val url: String,
+        val description: String,
+        val type: String
+    )
+
     fun reducingNumber(value: Long): String {
         val second = value.toString().toCharArray()
         return if (value in 1000..9_999) {

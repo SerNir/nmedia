@@ -45,15 +45,14 @@
         android:id="@+id/menuImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
         android:layout_marginTop="@dimen/common_spacing"
         android:layout_marginEnd="@dimen/common_spacing"
+        android:background="@android:color/transparent"
         android:contentDescription="@string/image_button"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_more_vert_24" />
-
 
 
     <androidx.constraintlayout.widget.Barrier
@@ -65,50 +64,54 @@
 
     <TextView
         android:id="@+id/contentTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/common_spacing"
+        android:layout_marginTop="32dp"
         android:autoLink="web"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/barrierHead"
         tools:text="@sample/posts.json/data/content" />
+
     <androidx.constraintlayout.widget.Group
-        android:id="@+id/videoGroup"
+        android:id="@+id/attachmentGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="videoView, playButton"
-        />
+        app:constraint_referenced_ids="attachmentImageView, attachmentTextView" />
 
     <ImageView
-        android:id="@+id/videoView"
+        android:id="@+id/attachmentImageView"
         android:layout_width="wrap_content"
         android:layout_height="200dp"
+        android:layout_margin="@dimen/common_spacing"
         android:src="@drawable/netology"
-        app:layout_constraintTop_toBottomOf="@+id/contentTextView"
         app:layout_constraintBottom_toTopOf="@+id/likeImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contentTextView" />
+
+    <TextView
+        android:text="sfasf"
+        android:id="@+id/attachmentTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/common_spacing"
+        app:layout_constraintTop_toBottomOf="@+id/attachmentImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+
         />
-
-    <ImageButton
-        android:id="@+id/playButton"
-        app:layout_constraintTop_toTopOf="@+id/videoView"
-        app:layout_constraintBottom_toBottomOf="@+id/videoView"
-        app:layout_constraintStart_toStartOf="@+id/videoView"
-        app:layout_constraintEnd_toEndOf="@+id/videoView"
-        android:src="@drawable/ic_play_circle_48"
-        android:background="@android:color/transparent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrierContent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="contentTextView" />
+        app:constraint_referenced_ids="attachmentTextView" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/likeImageView"

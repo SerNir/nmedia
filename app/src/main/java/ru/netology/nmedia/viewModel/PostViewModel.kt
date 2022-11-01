@@ -75,7 +75,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     fun likeById(id: Long) {
 
         repository.likeByIdAsync(id, object : GetCallback<Long> {
-            override fun onSuccess(post: Long) {
+            override fun onSuccess(id: Long) {
 
                 _data.value =
                     _data.value?.copy(posts = _data.value?.posts.orEmpty()
@@ -140,20 +140,6 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
 
     }
 
-    fun searchPostByIdAs(id: Long) {
-        repository.getPostByIdAsync(id, object : GetCallback<Post> {
-            override fun onSuccess(posts: Post) {
-                _data.postValue(
-                    _data.value?.copy(posts = _data.value?.posts.orEmpty())
-                )
-            }
-
-            override fun onError(e: Exception) {
-                _data.postValue(FeedModel(error = true))
-            }
-
-        })
-    }
 
     fun searchPostById(id: Long): Post? {
         repository.getPostByIdAsync(id, object : GetCallback<Post> {
@@ -168,6 +154,4 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         })
         return null
     }
-
-
 }

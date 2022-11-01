@@ -37,10 +37,11 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         _data.postValue(FeedModel(loading = true))
         repository.getAllAsync(object : GetCallback<List<Post>> {
             override fun onSuccess(posts: List<Post>) {
-                _data.postValue(FeedModel(posts = posts, empty = posts.isEmpty()))
+                _data.value = FeedModel(posts = posts, empty = posts.isEmpty())
             }
+
             override fun onError(e: Exception) {
-                _data.postValue(FeedModel(error = true))
+                _data.value = FeedModel(error = true)
             }
         })
     }
@@ -59,10 +60,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
 //                       _data.postValue(FeedModel(error = true))
                 }
             })
-
-
         }
-
     }
 
     fun changeContent(content: String) {
@@ -77,8 +75,9 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     fun likeById(id: Long) {
 
         repository.likeByIdAsync(id, object : GetCallback<Long> {
-            override fun onSuccess(id: Long) {
-                _data.postValue(
+            override fun onSuccess(post: Long) {
+
+                _data.value =
                     _data.value?.copy(posts = _data.value?.posts.orEmpty()
                         .map {
                             if (it.id == id) it.copy(
@@ -87,7 +86,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
                             ) else it
                         }
                     )
-                )
+
             }
 
             override fun onError(e: Exception) {
@@ -140,10 +139,13 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         edited.value = post
 
     }
-    fun searchPostByIdAs(id: Long) {
-        repository.getPostByIdAsync(id, object : GetCallback<Post>{
-            override fun onSuccess(posts: Post) {
 
+    fun searchPostByIdAs(id: Long) {
+        repository.getPostByIdAsync(id, object : GetCallback<Post> {
+            override fun onSuccess(posts: Post) {
+                _data.postValue(
+                    _data.value?.copy(posts = _data.value?.posts.orEmpty())
+                )
             }
 
             override fun onError(e: Exception) {
@@ -154,8 +156,16 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun searchPostById(id: Long): Post? {
+        repository.getPostByIdAsync(id, object : GetCallback<Post> {
+            override fun onSuccess(posts: Post) {
+                _data.value = FeedModel(post = posts)
+            }
 
+            override fun onError(e: Exception) {
+                _data.postValue(FeedModel(error = true))
+            }
 
+        })
         return null
     }
 

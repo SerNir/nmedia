@@ -90,16 +90,13 @@ class PostAdapter(
                 if (post.attachment != null){
                     attachmentGroup.visibility = View.VISIBLE
 
+                    attachmentTextView.text = post.attachment?.description.toString()
+
+                    Glide.with(binding.attachmentImageView)
+                        .load("$url/images/${post.attachment?.url}")
+                        .timeout(10_000)
+                        .into(binding.attachmentImageView)
                 }
-                attachmentTextView.text = post.attachment?.description.toString()
-
-                Glide.with(binding.attachmentImageView)
-                    .load("$url/images/${post.attachment?.url}")
-                    .timeout(10_000)
-                    .into(binding.attachmentImageView)
-
-
-
 
                 Glide.with(binding.logoImageView)
                     .load("$url/avatars/${post.authorAvatar}")
@@ -108,8 +105,6 @@ class PostAdapter(
                     .circleCrop()
                     .timeout(10_000)
                     .into(binding.logoImageView)
-
-
             }
         }
     }

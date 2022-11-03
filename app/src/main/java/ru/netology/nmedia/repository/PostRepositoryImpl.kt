@@ -65,7 +65,7 @@ class PostRepositoryImpl : PostRepository {
                 }
 
                 override fun onFailure(call: Call<Unit>, t: Throwable) {
-                    TODO("Not yet implemented")
+                    callback.onError(RuntimeException(t))
                 }
 
             })
@@ -122,7 +122,7 @@ class PostRepositoryImpl : PostRepository {
                 }
 
                 override fun onFailure(call: Call<Post>, t: Throwable) {
-                    TODO("Not yet implemented")
+                    callback.onError(RuntimeException(t))
                 }
             })
 

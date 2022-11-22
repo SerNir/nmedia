@@ -12,4 +12,7 @@ sealed interface FeedModeState {
     object Loading : FeedModeState
     object Refreshing : FeedModeState
     object Idle : FeedModeState
+    object Like : FeedModeState
+    object Dislike : FeedModeState
+    object DeletePost : FeedModeState
 }

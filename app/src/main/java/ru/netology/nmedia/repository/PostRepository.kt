@@ -10,7 +10,7 @@ interface PostRepository {
     suspend fun dislikeByIdAsync(id: Long)
     suspend fun removeByIdAsync(id: Long)
     suspend fun saveAsync(post: Post)
-     fun share(id: Long)
+    fun share(id: Long)
     suspend fun getPostByIdAsync(id: Long)
 
 

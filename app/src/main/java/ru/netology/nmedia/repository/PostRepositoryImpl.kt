@@ -34,122 +34,51 @@ class PostRepositoryImpl(private val postDao: PostDao) : PostRepository {
     }
 
     override suspend fun likeByIdAsync(id: Long) {
-        TODO("Not yet implemented")
+        val response = PostApi.service.likeById(id)
+        if (!response.isSuccessful) {
+            throw java.lang.RuntimeException("Response code: ${response.code()}")
+        }
+        response.body()?.also {
+            postDao.insert(PostEntity.fromDto(it))
+        }
     }
 
     override suspend fun dislikeByIdAsync(id: Long) {
-        TODO("Not yet implemented")
+        val response = PostApi.service.unlikeById(id)
+        if (!response.isSuccessful) {
+            throw java.lang.RuntimeException("Response code: ${response.code()}")
+        }
+        response.body()?.also {
+            postDao.insert(PostEntity.fromDto(it))
+        }
     }
 
     override suspend fun removeByIdAsync(id: Long) {
-        TODO("Not yet implemented")
+        val response = PostApi.service.delete(id)
+        if (!response.isSuccessful) {
+            throw java.lang.RuntimeException("Response code: ${response.code()}")
+        }
+        response.body()?.also {
+            postDao.removeById(id)
+        }
     }
 
     override suspend fun saveAsync(post: Post) {
-        TODO("Not yet implemented")
+        val response = PostApi.service.save(post)
+        if (!response.isSuccessful) {
+            throw java.lang.RuntimeException("Response code: ${response.code()}")
+        }
+        response.body()?.also {
+            postDao.save(PostEntity.fromDto(post))
+        }
     }
-
-    override  fun share(id: Long) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getPostByIdAsync(id: Long) {
-        TODO("Not yet implemented")
-    }
-    /**
-    override fun getAllAsync(callback: PostRepository.GetCallback<List<Post>>) {
-    )
-    }
-
-    override fun saveAsync(post: Post, callback: PostRepository.GetCallback<Post>) {
-    PostApi.service.save(post)
-    .enqueue(object : Callback<Post> {
-    override fun onResponse(call: Call<Post>, response: Response<Post>) {
-    val body = response.body() ?: throw java.lang.RuntimeException("body is null")
-    try {
-    callback.onSuccess(body)
-    } catch (e: Exception) {
-    callback.onError(e)
-    }
-    }
-
-    override fun onFailure(call: Call<Post>, t: Throwable) {
-    callback.onError(RuntimeException(t))
-    }
-
-    })
-
-    }
-
-    override fun removeByIdAsync(id: Long, callback: PostRepository.GetCallback<Unit>) {
-    PostApi.service.delete(id)
-    .enqueue(object : Callback<Unit> {
-    override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
-    callback.onSuccess(Unit)
-    }
-
-    override fun onFailure(call: Call<Unit>, t: Throwable) {
-    callback.onError(RuntimeException(t))
-    }
-
-    })
-    }
-
-    override fun likeByIdAsync(id: Long, callback: PostRepository.GetCallback<Long>) {
-    PostApi.service.likeById(id)
-    .enqueue(object : Callback<Post> {
-    override fun onResponse(call: Call<Post>, response: Response<Post>) {
-    if (!response.isSuccessful) {
-    callback.onError(RuntimeException("Response code: ${response.code()}"))
-    return
-    }
-    callback.onSuccess(id)
-    }
-
-    override fun onFailure(call: Call<Post>, t: Throwable) {
-    callback.onError(RuntimeException(t))
-    }
-    })
-
-    }
-
-    override fun dislikeByIdAsync(id: Long, callback: PostRepository.GetCallback<Long>) {
-    PostApi.service.unlikeById(id)
-    .enqueue(object : Callback<Post> {
-    override fun onResponse(call: Call<Post>, response: Response<Post>) {
-    callback.onSuccess(id)
-    }
-
-    override fun onFailure(call: Call<Post>, t: Throwable) {
-    callback.onError(RuntimeException(t))
-    }
-    })
-    }
-
 
     override fun share(id: Long) {
 
     }
 
-
-    override fun getPostByIdAsync(id: Long, callback: PostRepository.GetCallback<Post>) {
-    PostApi.service.getPostById(id)
-    .enqueue(object : Callback<Post>{
-    override fun onResponse(call: Call<Post>, response: Response<Post>) {
-    val body = response.body() ?: throw java.lang.RuntimeException("body is null")
-
-    try {
-    callback.onSuccess(body)
-    } catch (e: Exception) {
-    callback.onError(e)
-    }
+    override suspend fun getPostByIdAsync(id: Long) {
+        TODO("Not yet implemented")
     }
 
-    override fun onFailure(call: Call<Post>, t: Throwable) {
-    callback.onError(RuntimeException(t))
-    }
-    })
-
-    }
-     */
 }

@@ -21,11 +21,11 @@ import java.util.concurrent.TimeUnit
 private val client = OkHttpClient.Builder()
     .connectTimeout(30, TimeUnit.SECONDS)
     .let {
-        if (BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             it.addInterceptor(HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
             })
-        }else{
+        } else {
             it
         }
     }
@@ -48,17 +48,17 @@ interface PostApiService {
     suspend fun delete(@Path("id") id: Long): Response<Unit>
 
     @POST("posts/{id}/likes")
-    suspend fun likeById(@Path("id") id: Long):Response<Post>
+    suspend fun likeById(@Path("id") id: Long): Response<Post>
 
     @DELETE("posts/{id}/likes")
-    suspend fun unlikeById(@Path("id") id: Long):Response<Post>
+    suspend fun unlikeById(@Path("id") id: Long): Response<Post>
 
     @GET("posts/{id}/")
-   suspend fun getPostById(@Path("id") id: Long):Response<Post>
+    suspend fun getPostById(@Path("id") id: Long): Response<Post>
 
 }
 
-object PostApi{
+object PostApi {
     val service: PostApiService by lazy {
         retrofit.create()
     }

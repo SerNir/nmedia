@@ -20,14 +20,15 @@ private val empty = Post(
 )
 
 class PostViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository: PostRepository = PostRepositoryImpl(AppDb.getInstance(application).postDao())
+    private val repository: PostRepository =
+        PostRepositoryImpl(AppDb.getInstance(application).postDao())
 
     val data: LiveData<FeedModel> = repository.posts.map {
         FeedModel(it, it.isEmpty())
     }
-        private val _state = MutableLiveData<FeedModeState>()
+    private val _state = MutableLiveData<FeedModeState>()
     val state: LiveData<FeedModeState>
-    get() = _state
+        get() = _state
     val edited = MutableLiveData(empty)
     private val _postCreated = SingleLiveEvent<Unit>()
     val postCreated: LiveData<Unit>
@@ -78,49 +79,30 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     fun likeById(id: Long) = viewModelScope.launch {
         try {
             repository.likeByIdAsync(id)
-//            _data.value =
-//                _data.value?.copy(posts = _data.value?.posts.orEmpty()
-//                    .map {
-//                        if (it.id == id) it.copy(
-//                            likedByMe = true,
-//                            likes = it.likes + 1
-//                        ) else it
-//                    }
-//                )
+            _state.value = FeedModeState.Like
         } catch (e: Exception) {
-//            _data.postValue(FeedModel(error = true))
+            _state.value = FeedModeState.Error
         }
     }
 
     fun dislikedById(id: Long) = viewModelScope.launch {
         try {
             repository.dislikeByIdAsync(id)
-//            _data.postValue(
-//                _data.value?.copy(posts = _data.value?.posts.orEmpty()
-//                    .map {
-//                        if (it.id == id) it.copy(
-//                            likedByMe = false,
-//                            likes = it.likes - 1
-//                        ) else it
-//                    }
-//                )
-//            )
+            _state.value = FeedModeState.Dislike
+
         } catch (e: Exception) {
-//            _data.postValue(FeedModel(error = true))
+            _state.value = FeedModeState.Error
         }
     }
 
-     fun share(id: Long) = repository.share(id)
+    fun share(id: Long) = repository.share(id)
 
     fun removeById(id: Long) = viewModelScope.launch {
         try {
             repository.removeByIdAsync(id)
-//            _data.postValue(
-//                _data.value?.copy(posts = _data.value?.posts.orEmpty()
-//                    .filter { it.id != id }
-//                ))
+            _state.value = FeedModeState.DeletePost
         } catch (e: Exception) {
-//            _data.postValue(FeedModel(error = true))
+            _state.value = FeedModeState.Error
         }
     }
 

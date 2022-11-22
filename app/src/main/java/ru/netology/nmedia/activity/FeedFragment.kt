@@ -12,11 +12,13 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostAdapter
 import ru.netology.nmedia.databinding.FragmentFeedBinding
 import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.model.FeedModeState
 import ru.netology.nmedia.viewModel.PostViewModel
 
 class FeedFragment : Fragment() {
@@ -95,9 +97,19 @@ class FeedFragment : Fragment() {
 
         viewModel.data.observe(viewLifecycleOwner) { state ->
             adapter.submitList(state.posts)
-            binding.progress.isVisible = state.loading
-            binding.errorLoadingGroup.isVisible = state.error
             binding.emptyText.isVisible = state.empty
+        }
+
+        viewModel.state.observe(viewLifecycleOwner){state ->
+            binding.progress.isVisible = state is FeedModeState.Loading
+            binding.swipeRefresh.isRefreshing = state is FeedModeState.Refreshing
+          if (state is FeedModeState.Error){
+              Snackbar.make(binding.root, R.string.error_loading, Snackbar.LENGTH_SHORT)
+                  .setAction(R.string.retry_loading) {viewModel.loadPosts()}
+                  .show()
+          }
+
+
         }
 
         binding.retryButton.setOnClickListener {

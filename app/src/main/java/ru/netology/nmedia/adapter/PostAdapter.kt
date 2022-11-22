@@ -29,7 +29,6 @@ class PostAdapter(
     ListAdapter<Post, PostAdapter.PostViewHolder>(PostDiffUtil()) {
 
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return PostViewHolder(binding, onInteractionListener)
@@ -87,7 +86,7 @@ class PostAdapter(
                     onInteractionListener.openPost(post)
                 }
 
-                if (post.attachment != null){
+                if (post.attachment != null) {
                     attachmentGroup.visibility = View.VISIBLE
 
                     attachmentTextView.text = post.attachment?.description.toString()

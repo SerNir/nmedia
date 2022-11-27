@@ -20,7 +20,6 @@ interface OnInteractionListener {
     fun onShare(post: Post)
     fun onRemove(post: Post)
     fun onEdit(post: Post)
-    fun openPost(post: Post)
 }
 
 class PostAdapter(
@@ -80,10 +79,6 @@ class PostAdapter(
 
                         }
                     }.show()
-                }
-
-                binding.contentTextView.setOnClickListener {
-                    onInteractionListener.openPost(post)
                 }
 
                 if (post.attachment != null) {

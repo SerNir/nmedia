@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import ru.netology.nmedia.dto.Post
 
 @Entity
-class PostEntity(
+data class PostEntity(
     @PrimaryKey(autoGenerate = true) val id: Long,
     val author: String,
     val authorAvatar: String,
@@ -16,6 +16,7 @@ class PostEntity(
     var views: Long = 0,
     var likedByMe: Boolean = false,
     var sharedByMe: Boolean = false,
+    var showed: Boolean = true,
     ) {
     fun toDto() =
         Post(
@@ -45,4 +46,8 @@ class PostEntity(
             dto.sharedByMe,
             )
     }
+
 }
+
+fun List<Post>.toEntity(): List<PostEntity> = map(PostEntity::fromDto)
+fun List<PostEntity>.toDto(): List<Post> = map(PostEntity::toDto)

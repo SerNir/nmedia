@@ -82,14 +82,6 @@ class FeedFragment : Fragment() {
             }
 
 
-
-            override fun openPost(post: Post) {
-                findNavController().navigate(R.id.action_feedFragment_to_postFragment,
-                    Bundle().apply {
-                        longArg = post.id
-                    })
-            }
-
         }
         )
 
@@ -108,8 +100,6 @@ class FeedFragment : Fragment() {
                   .setAction(R.string.retry_loading) {viewModel.loadPosts()}
                   .show()
           }
-
-
         }
 
         binding.retryButton.setOnClickListener {
@@ -132,6 +122,20 @@ class FeedFragment : Fragment() {
         binding.retryButton.setOnClickListener {
             viewModel.loadPosts()
         }
+
+        viewModel.newerCount.observe(viewLifecycleOwner){
+            println("Newer count: $it")
+            if (it == 0)
+                binding.elevatedButton.visibility = View.GONE
+            else
+                binding.elevatedButton.visibility = View.VISIBLE
+
+        }
+        binding.elevatedButton.setOnClickListener {
+            viewModel.loadPosts()
+            binding.elevatedButton.visibility = View.GONE
+        }
+
 
         binding.add.setOnClickListener {
             findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)

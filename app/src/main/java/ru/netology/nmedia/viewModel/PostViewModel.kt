@@ -56,6 +56,17 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    fun loadNewerPost() = viewModelScope.launch {
+        _state.value = FeedModeState.Loading
+        try {
+            repository.getNewerPosts()
+            _state.value = FeedModeState.Idle
+        } catch (e: Exception) {
+            _state.value = FeedModeState.Error
+        }
+    }
+
+
     fun refresh() = viewModelScope.launch {
         _state.value = FeedModeState.Refreshing
         try {

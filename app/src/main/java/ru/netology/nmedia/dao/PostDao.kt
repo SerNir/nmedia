@@ -13,6 +13,9 @@ interface PostDao {
     @Query("SELECT * FROM PostEntity WHERE showed = 1 ORDER BY id DESC")
     fun getAll(): Flow<List<PostEntity>>
 
+    @Query("SELECT * FROM PostEntity WHERE showed = 0")
+    fun getNewerPost(): Flow<List<PostEntity>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(post: PostEntity)
 

@@ -21,8 +21,6 @@ class PostRepositoryImpl(private val postDao: PostDao) : PostRepository {
             it.map(PostEntity::toDto)
         }.flowOn(Dispatchers.Default)
 
-
-
     override fun getNewerCount(id: Long): Flow<Int> = flow {
         while (true) {
             try {
@@ -33,7 +31,7 @@ class PostRepositoryImpl(private val postDao: PostDao) : PostRepository {
                 }
 
                 val body = response.body() ?: throw java.lang.RuntimeException("body is null")
-                postDao.insert(body.toEntity().map {it.copy(showed = false)})
+                postDao.insert(body.toEntity().map { it.copy(showed = false) })
                 emit(body.size)
             } catch (e: CancellationException) {
                 throw e
@@ -42,6 +40,7 @@ class PostRepositoryImpl(private val postDao: PostDao) : PostRepository {
             }
         }
     }
+
 
     override suspend fun getAllAsync(): List<Post> {
         val response = PostApi.service.getPosts()
@@ -53,6 +52,17 @@ class PostRepositoryImpl(private val postDao: PostDao) : PostRepository {
             postDao.insert(it.map(PostEntity::fromDto))
         } ?: throw java.lang.RuntimeException("body is null")
     }
+
+    override suspend fun getNewerPosts():List<Post> {
+            val response = PostApi.service.getPosts()
+            if (!response.isSuccessful) {
+                throw RuntimeException("Response code: ${response.code()}")
+            }
+             return response.body()?.also {
+                 postDao.getNewerPost()
+            } ?: throw RuntimeException("Response code: ${response.code()}")
+    }
+
 
     override suspend fun likeByIdAsync(id: Long) {
         val response = PostApi.service.likeById(id)

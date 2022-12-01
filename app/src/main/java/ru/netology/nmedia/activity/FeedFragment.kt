@@ -132,7 +132,7 @@ class FeedFragment : Fragment() {
 
         }
         binding.elevatedButton.setOnClickListener {
-            viewModel.loadPosts()
+            viewModel.loadNewerPost()
             binding.elevatedButton.visibility = View.GONE
         }
 
